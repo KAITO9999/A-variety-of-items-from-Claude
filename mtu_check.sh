@@ -58,15 +58,6 @@ run_ping()      { run_cmd "ping $1"; }
 run_ping6()     { run_cmd "ping6 $1"; }
 run_tracepath() { eval "tracepath $1" 2>&1; }
 
-get_iface_mtu() {
-    local iface="$1"
-    local mtu=$(run_cmd "cat /sys/class/net/$iface/mtu" | tr -dc '0-9')
-    [[ -n "$mtu" && "$mtu" -gt 0 ]] && { echo "$mtu"; return; }
-    echo "1500"
-}
-
-MTU_WLAN=$(get_iface_mtu wlan0)
-
 draw_progress() {
     local done=$1 total=$2 spin=$3
     local percent=$(( done * 100 / total ))
@@ -159,7 +150,9 @@ select_backend() {
 measure_target() {
     local target="$1" proto="$2" outfile="$3" mode="$4"
     local result_mtu=0 final_mode="" header low high ping_runner frag_opt
-    high=$MTU_WLAN
+    
+    high=1500
+
     if [[ "$proto" == "IPv4" ]]; then
         header=28; low=576; ping_runner="run_ping"; frag_opt="-M do"
     else
@@ -217,7 +210,7 @@ measure_target() {
 # Main
 # ──────────────────────────────────────────
 printf '\033[1m\033[36m==========================================\n   MTU Checker\n'
-printf "   Backend    : $EXEC_MODE (auto)\n   wlan0 MTU  : $MTU_WLAN bytes\n==========================================\033[0m\n\n"
+printf "   Backend    : $EXEC_MODE (auto)\n   Max Search : 1500 bytes\n==========================================\033[0m\n\n"
 
 echo "Select measurement mode:"
 echo "  1/Enter) Default [error_read / binary_search / direct]"
@@ -234,9 +227,6 @@ if [[ "$MODE_SELECT" == "2" ]]; then
 fi
 
 printf "  Backend: \033[1m$EXEC_MODE\033[0m\n\n"
-
-# Re-fetch wlan0 MTU after backend is finalized
-MTU_WLAN=$(get_iface_mtu wlan0)
 
 declare -A pids temp labels
 for item in "${TARGETS[@]}"; do
@@ -287,7 +277,7 @@ while true; do
 
     printf "\033[${DISPLAY_LINES}A%b" "$output"
     $all_done && break
-    sleep 0.4
+    sleep 0.25
 done
 
 rm -f "${temp[@]}"
