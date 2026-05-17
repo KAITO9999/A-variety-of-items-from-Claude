@@ -169,28 +169,27 @@ measure_target() {
         return
     fi
 
-    # Mode 1 or 2 → ping
-    if ! $ping_runner "-c1 -W$TIMEOUT $frag_opt -s $((low - header)) $target" \
-            | grep -qE "1 received|1 packets received"; then
+    if ! $ping_runner "-c3 -W$TIMEOUT $frag_opt -s $((low - header)) $target" \
+            | grep -qE "[1-3] received|[1-3] packets received"; then
         echo "UNREACHABLE" > "$outfile"; return
     fi
 
-    local err=$($ping_runner "-c1 -W$TIMEOUT $frag_opt -s $((high - header)) $target")
+    local err=$($ping_runner "-c3 -W$TIMEOUT $frag_opt -s $((high - header)) $target")
     local extracted=$(extract_mtu_number "$err")
 
     if [[ -n "$extracted" && "$extracted" -gt 0 ]]; then
         result_mtu=$extracted
         final_mode="error_read"
     else
-        if echo "$err" | grep -qE "1 received|1 packets received"; then
+        if echo "$err" | grep -qE "[1-3] received|[1-3] packets received"; then
             result_mtu=$high
             final_mode="direct"
         else
             local optimal=0 tmp_low=$low tmp_high=$high
             while [[ "$tmp_low" -le "$tmp_high" ]]; do
                 local mid=$(( (tmp_low + tmp_high) / 2 ))
-                if $ping_runner "-c1 -W$TIMEOUT $frag_opt -s $((mid - header)) $target" \
-                        | grep -qE "1 received|1 packets received"; then
+                if $ping_runner "-c3 -W$TIMEOUT $frag_opt -s $((mid - header)) $target" \
+                        | grep -qE "[1-3] received|[1-3] packets received"; then
                     optimal=$mid; tmp_low=$((mid + 1))
                 else
                     tmp_high=$((mid - 1))
