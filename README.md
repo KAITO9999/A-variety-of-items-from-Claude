@@ -1,6 +1,6 @@
 # mtu_check.sh
 
-Usage:Usage:Android unsupported
+Usage:Usage:Android supported
   bash mtu_check.sh
   
   Mode 1: Default ping
