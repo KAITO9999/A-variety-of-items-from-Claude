@@ -1,7 +1,9 @@
 # mtu_check.sh
 
-Usage:Usage:Android supported
+Android supported
   bash mtu_check.sh
+
+Usage:Usage:
   
   Mode 1: Default ping
   Mode 2: Select backend manually
