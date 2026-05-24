@@ -1,6 +1,5 @@
-# mtu_check.sh
+# Android supported
 
-Android supported
   bash mtu_check.sh
 
 Usage:
