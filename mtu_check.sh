@@ -78,7 +78,7 @@ translate_mode() {
         error_read)    echo "error_read   [confidence:high]" ;;
         direct)        echo "direct       [confidence:high]" ;;
         binary_search) echo "binary_search[confidence:mid]"  ;;
-        tracepath)     echo "tracepath    [confidence:mid]"  ;;
+        tracepath)     echo "tracepath    [confidence:low]"  ;;
         *)             echo "$1" ;;
     esac
 }
