@@ -13,7 +13,7 @@ Usage:
 
 Download↓
 
-Gethab
+GitHub
 
 curl -O https://raw.githubusercontent.com/KAITO9999/A-variety-of-items-from-Claude/main/mtu_check.sh
 
