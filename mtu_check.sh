@@ -76,7 +76,7 @@ extract_mtu_number() { echo "$1" | grep -iEo 'mtu[ =:]+[0-9]+' | grep -oE '[0-9]
 translate_mode() {
     case "$1" in
         error_read)    echo "error_read   [confidence:high]" ;;
-        direct)        echo "direct       [confidence:high]" ;;
+        direct)        echo "direct       [confidence:mid]" ;;
         binary_search) echo "binary_search[confidence:mid]"  ;;
         tracepath)     echo "tracepath    [confidence:low]"  ;;
         *)             echo "$1" ;;
