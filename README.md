@@ -2,6 +2,9 @@
 
   bash mtu_check.sh
 
+Android network MTU measurement tool
+(for Termux / adb)
+
 Usage:
   
   Mode 1: Default ping
@@ -10,7 +13,10 @@ Usage:
 
 Download↓
 
-https://www.dropbox.com/scl/fi/4qg9khof9l5bhvq7a0uso/mtu_check.sh?rlkey=pkgjxebqilc6ao0v7dmg202ni&st=khshyomg&dl=0
-
+Gethab
 
 curl -O https://raw.githubusercontent.com/KAITO9999/A-variety-of-items-from-Claude/main/mtu_check.sh
+
+dropbox（mirror）
+
+https://www.dropbox.com/scl/fi/4qg9khof9l5bhvq7a0uso/mtu_check.sh?rlkey=pkgjxebqilc6ao0v7dmg202ni&st=khshyomg&dl=0
